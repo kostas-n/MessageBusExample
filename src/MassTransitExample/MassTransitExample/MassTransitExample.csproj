@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="7.3.1" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MassTransit.Abstractions\MassTransit.Abstractions.csproj" />
+    <ProjectReference Include="..\MassTransitExample.ASB\MassTransitExample.ASB.csproj" />
+    <ProjectReference Include="..\MassTransitExample.RabbitMQ\MassTransitExample.RabbitMQ.csproj" />
+  </ItemGroup>
+
+</Project>

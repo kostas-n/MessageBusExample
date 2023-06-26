@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "74a28adf-edfb-4cd9-88c3-4a72878cf8b8",
+		"name": "Mass Transit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2998582"
+	},
+	"item": [
+		{
+			"name": "Post a new sample",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sampleId\": 100,\r\n    \"sampleDescription\": \"New sample\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5136/samples",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5136",
+					"path": [
+						"samples"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
