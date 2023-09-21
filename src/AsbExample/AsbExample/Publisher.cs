@@ -14,10 +14,10 @@ namespace AsbExample
 		private readonly ServiceBusClient _client;
 		private readonly ServiceBusSender _sender;
 
-		public Publisher()
+		public Publisher(IOptions<AsbConfig> config)
 		{
-			_client = new ServiceBusClient("namespace", new DefaultAzureCredential());
-			_sender = _client.CreateSender("queue");
+			_client = new ServiceBusClient(config.Value.Namespace, new DefaultAzureCredential());
+			_sender = _client.CreateSender(config.Value.Queue);
 		}
 
 		public async Task Publish(ISampleAdded sampleAddedMessage)

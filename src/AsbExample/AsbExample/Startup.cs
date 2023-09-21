@@ -20,7 +20,7 @@ namespace AsbExample
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
-
+			services.Configure<AsbConfig>(Configuration.GetSection("ASB"));
 			services.AddSingleton<IPublisher, Publisher>();
 		}
 
