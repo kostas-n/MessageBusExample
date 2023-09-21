@@ -21,5 +21,12 @@ namespace AsbExample.Controllers
 			await _publisher.Publish(message);
 			return Ok();
 		}
+
+		[HttpGet, Route("/samples")]
+		public async Task<ActionResult> GetSamples()
+		{
+			var emptyList = new List<Sample>();
+			return Ok(emptyList);
+		}
 	}
 }
