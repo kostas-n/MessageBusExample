@@ -3,7 +3,9 @@ using AsbExample.Persistence;
 using Azure.Core;
 using Azure.Identity;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.Amqp.Framing;
 using Microsoft.Extensions.Options;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace AsbExample
@@ -25,6 +27,12 @@ namespace AsbExample
 		{
 			await _processor.StartProcessingAsync();
 			_processor.ProcessMessageAsync += _processor_ProcessMessageAsync;
+			_processor.ProcessErrorAsync += _processor_ProcessErrorAsync;
+		}
+
+		private Task _processor_ProcessErrorAsync(ProcessErrorEventArgs arg)
+		{
+			throw arg.Exception;
 		}
 
 		private async Task _processor_ProcessMessageAsync(ProcessMessageEventArgs arg)
