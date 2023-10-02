@@ -1,5 +1,6 @@
 ﻿
 using AsbExample;
+using AsbExample.Cosmos;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AsbExample
@@ -21,7 +22,10 @@ namespace AsbExample
 		{
 			services.AddControllers();
 			services.Configure<AsbConfig>(Configuration.GetSection("ASB"));
+			services.Configure<CosmosConfig>(Configuration.GetSection("CosmosDb"));
 			services.AddSingleton<IPublisher, Publisher>();
+			services.AddHostedService<ListenerService>();
+			services.AddSingleton<ICosmosServiceFactory, CosmosServiceFactory>();
 		}
 
 		/// <summary>
