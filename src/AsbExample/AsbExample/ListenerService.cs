@@ -27,9 +27,9 @@ namespace AsbExample
 
 		public async Task StartAsync(CancellationToken cancellationToken)
 		{
-			await _processor.StartProcessingAsync();
 			_processor.ProcessMessageAsync += _processor_ProcessMessageAsync;
 			_processor.ProcessErrorAsync += _processor_ProcessErrorAsync;
+			await _processor.StartProcessingAsync();
 		}
 
 		private Task _processor_ProcessErrorAsync(ProcessErrorEventArgs arg)
