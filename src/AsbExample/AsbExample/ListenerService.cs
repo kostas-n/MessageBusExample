@@ -15,11 +15,7 @@ namespace AsbExample
 
 		public ListenerService(ICosmosServiceFactory cosmosServiceFactory, IOptions<AsbConfig> config)
 		{
-			var clientOptions = new ServiceBusClientOptions
-			{
-				TransportType = ServiceBusTransportType.AmqpWebSockets
-			};
-			var client = new ServiceBusClient(config.Value.Namespace, new DefaultAzureCredential(), clientOptions);
+			var client = new ServiceBusClient(config.Value.Namespace, new DefaultAzureCredential());
 
 			_processor = client.CreateProcessor(config.Value.Queue);
 			_cosmosServiceFactory = cosmosServiceFactory;
