@@ -10,10 +10,11 @@ using System.Text.Json;
 
 namespace AsbExample
 {
-	public class ListenerService: IHostedService
+	public class ListenerService : IHostedService
 	{
 		private ServiceBusProcessor _processor;
 		private ICosmosServiceFactory _cosmosServiceFactory;
+		private FailureRandomiser _failureRandomiser;
 
 		public ListenerService(ICosmosServiceFactory cosmosServiceFactory, IOptions<AsbConfig> config)
 		{
@@ -21,6 +22,7 @@ namespace AsbExample
 
 			_processor = client.CreateProcessor(config.Value.Queue);
 			_cosmosServiceFactory = cosmosServiceFactory;
+			_failureRandomiser = new FailureRandomiser();
 		}
 
 		public async Task StartAsync(CancellationToken cancellationToken)
@@ -32,12 +34,17 @@ namespace AsbExample
 
 		private Task _processor_ProcessErrorAsync(ProcessErrorEventArgs arg)
 		{
-			throw arg.Exception;
+			return Task.CompletedTask;
 		}
 
 		private async Task _processor_ProcessMessageAsync(ProcessMessageEventArgs arg)
 		{
-			var sample =  JsonSerializer.Deserialize<SampleDto>(arg.Message.Body.ToString());
+			if (_failureRandomiser.ShoudlFail())
+			{
+				await arg.DeadLetterMessageAsync(arg.Message);
+				return;
+			}
+			var sample = JsonSerializer.Deserialize<SampleDto>(arg.Message.Body.ToString());
 
 			var cosmosService = _cosmosServiceFactory.GetCosmosService();
 			await cosmosService.AddSample(sample);
