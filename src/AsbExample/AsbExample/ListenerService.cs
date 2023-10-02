@@ -34,12 +34,12 @@ namespace AsbExample
 
 		private Task _processor_ProcessErrorAsync(ProcessErrorEventArgs arg)
 		{
-			return Task.CompletedTask;
+			throw arg.Exception;
 		}
 
 		private async Task _processor_ProcessMessageAsync(ProcessMessageEventArgs arg)
 		{
-			if (_failureRandomiser.ShoudlFail())
+			if (_failureRandomiser.ShouldFail())
 			{
 				await arg.DeadLetterMessageAsync(arg.Message);
 				return;
